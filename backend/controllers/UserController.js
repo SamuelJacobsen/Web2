@@ -1,4 +1,5 @@
 const User = require('../models/User')
+// haha
 
 module.exports = class UserController {
     static async register(req, res) {
