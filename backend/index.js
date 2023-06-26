@@ -1,9 +1,14 @@
-const express = require('express')
+const express = require('express');
 
-const app = express()   
+const app = express();
 
 //config Json response
-app.use(express.json())
+app.use(express.json());
+
+//Db Connection
+// const conn = require("./db/conn");
+// conn();
+
 
 //pasta para as imagens
 app.use(express.static('public'))
