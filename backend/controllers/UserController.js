@@ -95,4 +95,20 @@ module.exports = class UserController {
         }
         await createUserToken(user, req, res)
     }
+
+
+    //verifica e valida om usuario por jwt
+    static async checkUser(req, res) {
+        let currentUser
+
+        console.log(req.headers.authorization)
+
+        if (req.headers.authorization) {
+            
+        } else {
+            currentUser = null
+        }
+
+        res.status(200).send(currentUser)
+    }
 }
