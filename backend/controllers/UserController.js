@@ -133,10 +133,22 @@ module.exports = class UserController {
         }
         res.status(200).json({ user })
     }
-    static async editUser(req, res){
-        res.status(200).json({
-            message: 'Deu certo update!',
-        })
-        return
+
+    static async editUser(req, res) {
+        // res.status(200).json({
+        //     message: 'Ok'
+        // })
+        // return
+        const id = req.params.id
+
+        const user = await User.findById(id)
+
+        if(!user) {
+            res.status(422).json({
+                message: 'Usuario não encontrado!',
+            })
+            return
+        }
+        
     }
 }
