@@ -8,4 +8,6 @@ router.post('/login', UserController.login)
 
 router.get('/checkuser', UserController.checkUser)
 
+router.get('/:id', UserController.getUserById)
+
 module.exports = router
