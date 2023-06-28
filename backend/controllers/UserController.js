@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')
 
 //helpers
 const createUserToken = require('../helpers/create-user-token')
+const getUserByToken = require('../helpers/get-user-by-token')
 const getToken = require('../helpers/get-token')
 const { default: mongoose } = require('mongoose')
 
@@ -136,24 +137,66 @@ module.exports = class UserController {
     }
 
     static async editUser(req, res) {
-        // res.status(200).json({
-        //     message: 'Ok'
-        // })
-        // return
+        const id = req.params.id
+
+        //verifica se o id é valido
         if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-            return res.status(400).json({message: 'ID invalido!'})
+            return res.status(400).json({ message: 'ID invalido!' })
         }
-        try {
-            const user = await User.findById(req.params.id)
-            if(!user){
-                res.status(422).json({
-                    message: 'Usuario não encontrado!',
-                })
-            }
-            res.status(200).json({ user })
-        } catch (err) {
-            res.status(500).json(err.message)
+       
+        //verifica se o usuario existe
+        const token = getToken(req)
+        const user = await getUserByToken(token)
+        if (!user) {
+            res.status(422).json({
+                message: 'Usuario não encontrado!',
+            })
         }
 
+
+            const { name, email, phone, password, confirmpassword } = req.body
+            
+            let image = ''
+
+            //validations
+            if (!name) {
+                res.status(422).json({ message: 'O nome é obrigatorio' })
+                return
+            }
+            user.name = name
+
+            if (!email) {
+                res.status(422).json({ message: 'O email é obrigatorio' })
+                return
+            }
+            //valida se o usuario nao esta usando email cadastrado no sistema
+            const userExists = await User.findOne({ email: email })
+            if (user.email !== email && userExists) {
+                res.status(422).json({
+                    message: 'Por favor, utilize outro email!'
+                })
+                return
+            }
+            user.email = email
+
+            if (!phone) {
+                res.status(422).json({ message: 'O telefone é obrigatorio' })
+                return
+            }
+            if (!password) {
+                res.status(422).json({ message: 'A senha é obrigatoria' })
+                return
+            }
+            if (!confirmpassword) {
+                res.status(422).json({ message: 'A confirmação de senha é obrigatoria' })
+                return
+            }
+            if (password !== confirmpassword) {
+                res.status(422).json({
+                    message: 'A senha e a confirmação de senha precisam ser iguais!',
+                })
+                return
+            }
+
+        }
     }
-}
