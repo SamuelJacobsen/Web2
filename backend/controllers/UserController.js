@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken')
 //helpers
 const createUserToken = require('../helpers/create-user-token')
 const getToken = require('../helpers/get-token')
+const { default: mongoose } = require('mongoose')
 
 module.exports = class UserController {
     static async register(req, res) {
@@ -139,16 +140,20 @@ module.exports = class UserController {
         //     message: 'Ok'
         // })
         // return
-        const id = req.params.id
-
-        const user = await User.findById(id)
-
-        if(!user) {
-            res.status(422).json({
-                message: 'Usuario não encontrado!',
-            })
-            return
+        if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+            return res.status(400).json({message: 'ID invalido!'})
         }
-        
+        try {
+            const user = await User.findById(req.params.id)
+            if(!user){
+                res.status(422).json({
+                    message: 'Usuario não encontrado!',
+                })
+            }
+            res.status(200).json({ user })
+        } catch (err) {
+            res.status(500).json(err.message)
+        }
+
     }
 }
