@@ -9,4 +9,5 @@ router.post('/create', verifyToken, ProductController.create)
 
 router.get('/', ProductController.getAll)
 
+router.get('/:id', ProductController.getProductById)
 module.exports = router
