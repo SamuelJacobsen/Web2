@@ -12,14 +12,6 @@ const Product = mongoose.model(
             type: Number,
             required: true
         },
-        // description:{
-        //     type: String,
-        //     required: true
-        // },
-        // images: {
-        //     type: Array,
-        //     required: true
-        // },
         available: {
             type: Boolean
         },

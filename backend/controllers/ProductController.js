@@ -18,11 +18,11 @@ module.exports = class ProductController {
             res.status(422).json({message: "O nome é obrigatório!"})
         }
         if(!price){
-            res.status(422).json({message: "O preço é obrigatório!"})
+            res.status(422).json({message: "O preço é obrigatório!"}) 
         }
         //get product owner
         const token = getToken(req)
-        const user = getUserByToken(token)
+        const user = await getUserByToken(token)
 
         //create a product
         const product = new Product({
@@ -37,9 +37,10 @@ module.exports = class ProductController {
 
         try {
             const newProduct = await product.save()
+            
             res.status(201).json({
                 message: 'Produto cadastrado com sucesso!',
-                newProduct
+                newProduct,
             })
         } catch (error) {
             res.status(500).json({message: error})
