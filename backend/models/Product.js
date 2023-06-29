@@ -9,17 +9,17 @@ const Product = mongoose.model(
             required: true
         },
         price: {
-            type: float,
+            type: Number,
             required: true
         },
         description:{
             type: String,
             required: true
         },
-        images: {
-            type: Array,
-            required: true
-        },
+        // images: {
+        //     type: Array,
+        //     required: true
+        // },
         available: {
             type: Boolean
         },
