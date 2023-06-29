@@ -4,6 +4,7 @@ const Product = require('../models/Product')
 const getToken = require("../helpers/get-token")
 const getUserByToken = require("../helpers/get-user-by-token")
 const { default: mongoose } = require('mongoose')
+const { ObjectId } = require('mongodb')
 
 module.exports = class ProductController {
 
@@ -72,6 +73,24 @@ module.exports = class ProductController {
         }
 
         res.status(200).json({ product })
+
+    }
+    static async removeProductById(req, res) {
+        const id = req.params.id
+
+        if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+            res.status(422).json({ message: "Id Invalido" })
+            return
+        }
+
+        //verifica se o produto existe
+        const product = await Product.findOne({ _id: id })
+
+        if (!product) {
+            res.status(404).json({ message: 'Produto não encontrado ' })
+        }
+        await Product.findByIdAndRemove(id)
+        res.status(200).json({ message: 'Produto removido' })
 
     }
 }

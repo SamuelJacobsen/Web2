@@ -1,5 +1,6 @@
 const router = require('express').Router()
 
+const ProductController = require('../controllers/ProductController')
 const UserController = require('../controllers/UserController')
 
 //middlewares
@@ -12,5 +13,7 @@ router.get('/:id', UserController.getUserById)
 
 //rota de atualizacao portanto protegida
 router.patch('/edit/:id', verifyToken, UserController.editUser)
+router.delete('/:id', verifyToken, ProductController.removeProductById)
+
 
 module.exports = router

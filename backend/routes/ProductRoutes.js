@@ -10,4 +10,5 @@ router.post('/create', verifyToken, ProductController.create)
 router.get('/', ProductController.getAll)
 
 router.get('/:id', ProductController.getProductById)
+router.delete('/:id', verifyToken, ProductController.removeProductById)
 module.exports = router
