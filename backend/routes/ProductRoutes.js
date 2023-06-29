@@ -11,4 +11,5 @@ router.get('/', ProductController.getAll)
 
 router.get('/:id', ProductController.getProductById)
 router.delete('/:id', verifyToken, ProductController.removeProductById)
+router.patch('/:id', verifyToken, ProductController.updateProduct)
 module.exports = router

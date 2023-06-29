@@ -88,9 +88,43 @@ module.exports = class ProductController {
 
         if (!product) {
             res.status(404).json({ message: 'Produto não encontrado ' })
+            return
         }
         await Product.findByIdAndRemove(id)
         res.status(200).json({ message: 'Produto removido' })
+
+    }
+
+    static async updateProduct(req, res) {
+        const id = req.params.id
+        const { name, price, available } = req.body
+
+        const updateData = {}
+
+        //verifica se o produto existe
+        const product = await Product.findOne({ _id: id })
+
+        if (!product) {
+            res.status(404).json({ message: 'Produto não encontrado ' })
+            return
+        }
+        //validations
+        if (!name) {
+            res.status(422).json({ message: "O nome é obrigatório!" })
+        } else {
+            updateData.name = name
+        }
+        if (!price) {
+            res.status(422).json({ message: "O preço é obrigatório!" })
+        } else {
+            updateData.price = price
+        }
+        // Atualiza os dados do produto no banco de dados
+        const updatedProduct = await Product.findByIdAndUpdate(id, updateData, { new: true })
+
+        res.status(200).json({ message: 'Produto atualizado', updatedProduct })
+    } catch(error) {
+        res.status(500).json({ message: 'Ocorreu um erro ao atualizar o produto' })
 
     }
 }
