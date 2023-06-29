@@ -7,4 +7,6 @@ const verifyToken = require('../helpers/verify-token')
 
 router.post('/create', verifyToken, ProductController.create)
 
+router.get('/', ProductController.getAll)
+
 module.exports = router

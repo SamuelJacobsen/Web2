@@ -46,4 +46,13 @@ module.exports = class ProductController {
             res.status(500).json({message: error})
         }
     }
+
+    static async getAll(req, res){
+        //manda os produtos mais novos
+        const products = await Product.find().sort('-createdAt')
+
+        res.status(200).json({
+            products: products 
+        })
+    }
 }
