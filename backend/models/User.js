@@ -20,11 +20,12 @@ const User = mongoose.model(
             type: String,
             required: true
         },
-        image: {
-            type: String
-        },
         phone: {
             type: String,
+            required: true
+        },
+        adm: {
+            type: Boolean,
             required: true
         }
     }, {timestamps: true},
