@@ -104,15 +104,16 @@ module.exports = class UserController {
         await user.save()
 
         // Contagem de usuários
-        const userCount = await User.countDocuments()
+        // const userCount = await User.countDocuments()
 
         // Criação do token de autenticação
-        await createUserToken(user, req, res)
+        const token = await createUserToken(user, req, res)
 
         // Retorna a resposta com a contagem de usuários
-        res.json({
+        res.status(200).json({
             message: 'Login realizado com sucesso',
-            count: userCount
+            count: user.acesso,
+            token: token
         })
     }
     static async countAcess(req, res) {
