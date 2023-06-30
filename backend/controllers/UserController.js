@@ -115,6 +115,16 @@ module.exports = class UserController {
             count: userCount
         })
     }
+    static async countAcess(req, res) {
+        const id = req.params.id
+
+        const user = await User.findOne({ _id: id })
+
+        if (!user) {
+            res.status(404).json({ message: 'usuario nao encontrado' })
+        }
+        res.status(200).json({ count: user.acesso })
+    }
 
 
     //verifica e valida om usuario por jwt

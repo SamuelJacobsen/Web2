@@ -24,10 +24,10 @@ const User = mongoose.model(
             type: String,
             required: true
         },
-        adm: {
-            type: Boolean,
-            required: true
-        },
+        // adm: {
+        //     type: Boolean,
+        //     required: true
+        // },
         acesso:{
             type: Number,
             required: true,
