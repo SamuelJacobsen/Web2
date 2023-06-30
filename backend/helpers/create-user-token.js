@@ -16,7 +16,7 @@ const createUserToken = async(user, req, res) => {
 return{
     message: "voce esta autenticado",
     token: token,
-    userId: user._id,
+    
 
 }
 }
