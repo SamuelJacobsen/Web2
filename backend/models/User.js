@@ -27,6 +27,11 @@ const User = mongoose.model(
         adm: {
             type: Boolean,
             required: true
+        },
+        acesso:{
+            type: Number,
+            required: true,
+            default: 0
         }
     }, {timestamps: true},
     )

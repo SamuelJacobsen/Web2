@@ -99,7 +99,21 @@ module.exports = class UserController {
             })
             return
         }
+        // Incrementa o campo "acesso" para contagem de usuários
+        user.acesso += 1
+        await user.save()
+
+        // Contagem de usuários
+        const userCount = await User.countDocuments()
+
+        // Criação do token de autenticação
         await createUserToken(user, req, res)
+
+        // Retorna a resposta com a contagem de usuários
+        res.json({
+            message: 'Login realizado com sucesso',
+            count: userCount
+        })
     }
 
 
@@ -156,7 +170,7 @@ module.exports = class UserController {
 
         const { name, email, phone, password, confirmpassword } = req.body
 
-        
+
 
         //validations
         if (!name) {
@@ -200,7 +214,7 @@ module.exports = class UserController {
         }
         try {
             //return user updated data
-             await User.findOneAndUpdate(
+            await User.findOneAndUpdate(
                 { _id: user.id },
                 { $set: user },
                 { new: true },

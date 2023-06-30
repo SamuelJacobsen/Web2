@@ -18,7 +18,7 @@ const Product = mongoose.model(
         User: {
             //alteração para salvar somente o id do usuario 
             type: Schema.Types.ObjectId,
-            ref: 'User'
+            ref: 'User',
         },
         buyer: Object
 

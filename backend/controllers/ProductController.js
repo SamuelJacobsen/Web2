@@ -75,6 +75,7 @@ module.exports = class ProductController {
         res.status(200).json({ product })
 
     }
+ 
     static async removeProductById(req, res) {
         const id = req.params.id
 
